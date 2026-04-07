@@ -4,11 +4,12 @@ function TaskModal({ task, onSave, onClose }) {
   const [title, setTitle] = useState(task?.title || '');
   const [description, setDescription] = useState(task?.description || '');
   const [status, setStatus] = useState(task?.status || 'todo');
+  const [dueDate, setDueDate] = useState(task?.due_date || '');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title.trim()) return;
-    onSave({ title, description, status });
+    onSave({ title, description, status, due_date: dueDate || null });
   };
 
   return (
@@ -49,6 +50,14 @@ function TaskModal({ task, onSave, onClose }) {
               <option value="in_progress">Käynnissä</option>
               <option value="done">Valmis</option>
             </select>
+          </div>
+          <div className="form-group">
+            <label>Deadline</label>
+            <input
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+            />
           </div>
           <div className="modal-actions">
             <button type="button" className="btn btn-secondary" onClick={onClose}>

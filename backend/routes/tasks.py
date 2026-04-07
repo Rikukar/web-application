@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from datetime import date
 from models import db, Task
 
 tasks_bp = Blueprint('tasks', __name__)
@@ -33,10 +34,18 @@ def create_task():
     if status not in VALID_STATUSES:
         return jsonify({'error': f'Virheellinen tila. Sallitut: {VALID_STATUSES}'}), 400
 
+    due_date = None
+    if data.get('due_date'):
+        try:
+            due_date = date.fromisoformat(data['due_date'])
+        except ValueError:
+            return jsonify({'error': 'Virheellinen päivämäärä'}), 400
+
     task = Task(
         title=title,
         description=data.get('description', '').strip(),
         status=status,
+        due_date=due_date,
         user_id=user_id
     )
     db.session.add(task)
@@ -68,6 +77,15 @@ def update_task(task_id):
         if data['status'] not in VALID_STATUSES:
             return jsonify({'error': f'Virheellinen tila. Sallitut: {VALID_STATUSES}'}), 400
         task.status = data['status']
+
+    if 'due_date' in data:
+        if data['due_date']:
+            try:
+                task.due_date = date.fromisoformat(data['due_date'])
+            except ValueError:
+                return jsonify({'error': 'Virheellinen päivämäärä'}), 400
+        else:
+            task.due_date = None
 
     db.session.commit()
     return jsonify(task.to_dict()), 200

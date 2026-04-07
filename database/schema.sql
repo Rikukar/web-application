@@ -17,6 +17,7 @@ CREATE TABLE tasks (
     title VARCHAR(200) NOT NULL,
     description TEXT DEFAULT '',
     status VARCHAR(20) DEFAULT 'todo' CHECK (status IN ('todo', 'in_progress', 'done')),
+    due_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE

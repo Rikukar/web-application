@@ -1,6 +1,6 @@
 # Tehtävienhallintasovellus
 
-Diplomityön web-sovellus tehtävien hallintaan.
+Web-sovellus tehtävien hallintaan.
 
 ## Ominaisuudet
 

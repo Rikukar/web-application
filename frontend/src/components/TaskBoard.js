@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import TaskModal from './TaskModal';
+import Calendar from './Calendar';
 
 const STATUS_LABELS = {
   todo: 'Tehtävä',
@@ -20,6 +21,7 @@ function TaskBoard() {
   const [tasks, setTasks] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  const [view, setView] = useState('board'); // 'board' or 'calendar'
   const { username, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -91,11 +93,30 @@ function TaskBoard() {
       <div className="task-board">
         <div className="board-header">
           <h2>Tehtävät</h2>
-          <button className="btn btn-primary" onClick={handleCreate}>
-            + Uusi tehtävä
-          </button>
+          <div className="board-header-actions">
+            <div className="view-toggle">
+              <button
+                className={`btn-toggle ${view === 'board' ? 'active' : ''}`}
+                onClick={() => setView('board')}
+              >
+                Taulu
+              </button>
+              <button
+                className={`btn-toggle ${view === 'calendar' ? 'active' : ''}`}
+                onClick={() => setView('calendar')}
+              >
+                Kalenteri
+              </button>
+            </div>
+            <button className="btn btn-new-task" onClick={handleCreate}>
+              + Uusi tehtävä
+            </button>
+          </div>
         </div>
 
+        {view === 'calendar' ? (
+          <Calendar tasks={tasks} />
+        ) : (
         <div className="columns">
           {['todo', 'in_progress', 'done'].map((status) => (
             <div
@@ -106,9 +127,17 @@ function TaskBoard() {
                 {STATUS_LABELS[status]} ({getTasksByStatus(status).length})
               </h3>
               {getTasksByStatus(status).map((task) => (
-                <div key={task.id} className="task-card">
-                  <h4>{task.title}</h4>
+                <div key={task.id} className={`task-card ${task.is_overdue ? 'task-overdue' : ''}`}>
+                  <div className="task-card-header">
+                    <h4>{task.title}</h4>
+                    {task.is_overdue && <span className="badge-overdue">Myöhässä</span>}
+                  </div>
                   {task.description && <p>{task.description}</p>}
+                  {task.due_date && (
+                    <div className={`task-due-date ${task.is_overdue ? 'overdue' : ''}`}>
+                      📅 {new Date(task.due_date + 'T00:00:00').toLocaleDateString('fi-FI')}
+                    </div>
+                  )}
                   <div className="task-actions">
                     <button className="btn-status" onClick={() => handleStatusChange(task)}>
                       → {STATUS_LABELS[NEXT_STATUS[task.status]]}
@@ -125,6 +154,7 @@ function TaskBoard() {
             </div>
           ))}
         </div>
+        )}
       </div>
 
       {modalOpen && (
