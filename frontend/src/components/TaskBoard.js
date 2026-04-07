@@ -22,6 +22,8 @@ function TaskBoard() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [view, setView] = useState('board'); // 'board' or 'calendar'
+  const [draggedTaskId, setDraggedTaskId] = useState(null);
+  const [dragOverColumn, setDragOverColumn] = useState(null);
   const { username, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -78,6 +80,47 @@ function TaskBoard() {
 
   const getTasksByStatus = (status) => tasks.filter((t) => t.status === status);
 
+  const handleDragStart = (e, taskId) => {
+    setDraggedTaskId(taskId);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragOver = (e, status) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    setDragOverColumn(status);
+  };
+
+  const handleDragLeave = () => {
+    setDragOverColumn(null);
+  };
+
+  const handleDrop = async (e, newStatus) => {
+    e.preventDefault();
+    setDragOverColumn(null);
+    if (!draggedTaskId) return;
+
+    const task = tasks.find((t) => t.id === draggedTaskId);
+    setDraggedTaskId(null);
+    if (!task || task.status === newStatus) return;
+
+    // Optimistic update
+    setTasks((prev) =>
+      prev.map((t) => (t.id === task.id ? { ...t, status: newStatus } : t))
+    );
+    try {
+      await api.put(`/tasks/${task.id}`, { status: newStatus });
+      fetchTasks();
+    } catch {
+      fetchTasks();
+    }
+  };
+
+  const handleDragEnd = () => {
+    setDraggedTaskId(null);
+    setDragOverColumn(null);
+  };
+
   return (
     <>
       <header className="header">
@@ -121,13 +164,22 @@ function TaskBoard() {
           {['todo', 'in_progress', 'done'].map((status) => (
             <div
               key={status}
-              className={`column column-${status === 'in_progress' ? 'progress' : status}`}
+              className={`column column-${status === 'in_progress' ? 'progress' : status} ${dragOverColumn === status ? 'column-drag-over' : ''}`}
+              onDragOver={(e) => handleDragOver(e, status)}
+              onDragLeave={handleDragLeave}
+              onDrop={(e) => handleDrop(e, status)}
             >
               <h3>
                 {STATUS_LABELS[status]} ({getTasksByStatus(status).length})
               </h3>
               {getTasksByStatus(status).map((task) => (
-                <div key={task.id} className={`task-card ${task.is_overdue ? 'task-overdue' : ''}`}>
+                <div
+                  key={task.id}
+                  className={`task-card ${task.is_overdue ? 'task-overdue' : ''} ${draggedTaskId === task.id ? 'task-dragging' : ''}`}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, task.id)}
+                  onDragEnd={handleDragEnd}
+                >
                   <div className="task-card-header">
                     <h4>{task.title}</h4>
                     {task.is_overdue && <span className="badge-overdue">Myöhässä</span>}

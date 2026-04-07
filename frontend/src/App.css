@@ -204,11 +204,29 @@
   padding: 14px;
   margin-bottom: 10px;
   border: 1px solid #eee;
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.2s, opacity 0.2s, transform 0.2s;
+  cursor: grab;
 }
 
 .task-card:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-card:active {
+  cursor: grabbing;
+}
+
+.task-dragging {
+  opacity: 0.4;
+  transform: scale(0.97);
+  box-shadow: 0 0 0 2px #4a90d9;
+}
+
+/* Column drag-over highlight */
+.column-drag-over {
+  background: #eef4fb;
+  border: 2px dashed #4a90d9;
+  transition: all 0.2s ease;
 }
 
 .task-card h4 {
