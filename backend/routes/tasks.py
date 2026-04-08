@@ -6,6 +6,7 @@ from models import db, Task
 tasks_bp = Blueprint('tasks', __name__)
 
 VALID_STATUSES = ['todo', 'in_progress', 'done']
+VALID_PRIORITIES = ['low', 'normal', 'high']
 
 @tasks_bp.route('', methods=['GET'])
 @jwt_required()
@@ -34,6 +35,10 @@ def create_task():
     if status not in VALID_STATUSES:
         return jsonify({'error': f'Virheellinen tila. Sallitut: {VALID_STATUSES}'}), 400
 
+    priority = data.get('priority', 'normal')
+    if priority not in VALID_PRIORITIES:
+        return jsonify({'error': f'Virheellinen prioriteetti. Sallitut: {VALID_PRIORITIES}'}), 400
+
     due_date = None
     if data.get('due_date'):
         try:
@@ -45,6 +50,7 @@ def create_task():
         title=title,
         description=data.get('description', '').strip(),
         status=status,
+        priority=priority,
         due_date=due_date,
         user_id=user_id
     )
@@ -77,6 +83,11 @@ def update_task(task_id):
         if data['status'] not in VALID_STATUSES:
             return jsonify({'error': f'Virheellinen tila. Sallitut: {VALID_STATUSES}'}), 400
         task.status = data['status']
+
+    if 'priority' in data:
+        if data['priority'] not in VALID_PRIORITIES:
+            return jsonify({'error': f'Virheellinen prioriteetti. Sallitut: {VALID_PRIORITIES}'}), 400
+        task.priority = data['priority']
 
     if 'due_date' in data:
         if data['due_date']:

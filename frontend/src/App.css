@@ -424,6 +424,105 @@
   font-weight: 600;
 }
 
+.task-badges {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.badge-priority {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.priority-high {
+  background: #fde8e8;
+  color: #e74c3c;
+}
+
+.priority-normal {
+  background: #e8f0fe;
+  color: #4a90d9;
+}
+
+.priority-low {
+  background: #f0f0f0;
+  color: #888;
+}
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-search {
+  flex: 1;
+  min-width: 200px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #4a90d9;
+  box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.12);
+}
+
+.filter-selects {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-select {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 13px;
+  background: white;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #4a90d9;
+}
+
+.btn-clear-filters {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #f0f0f0;
+  color: #666;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-clear-filters:hover {
+  background: #e0e0e0;
+  color: #333;
+}
+
 .task-due-date {
   font-size: 12px;
   color: #888;

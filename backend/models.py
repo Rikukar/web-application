@@ -23,6 +23,7 @@ class Task(db.Model):
     title = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, default='')
     status = db.Column(db.String(20), default='todo')  # todo, in_progress, done
+    priority = db.Column(db.String(10), default='normal')  # low, normal, high
     due_date = db.Column(db.Date, nullable=True)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc),
@@ -41,6 +42,7 @@ class Task(db.Model):
             'title': self.title,
             'description': self.description,
             'status': self.status,
+            'priority': self.priority,
             'due_date': self.due_date.isoformat() if self.due_date else None,
             'is_overdue': self.is_overdue,
             'created_at': self.created_at.isoformat(),

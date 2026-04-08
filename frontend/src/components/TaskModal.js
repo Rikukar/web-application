@@ -4,12 +4,13 @@ function TaskModal({ task, onSave, onClose }) {
   const [title, setTitle] = useState(task?.title || '');
   const [description, setDescription] = useState(task?.description || '');
   const [status, setStatus] = useState(task?.status || 'todo');
+  const [priority, setPriority] = useState(task?.priority || 'normal');
   const [dueDate, setDueDate] = useState(task?.due_date || '');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title.trim()) return;
-    onSave({ title, description, status, due_date: dueDate || null });
+    onSave({ title, description, status, priority, due_date: dueDate || null });
   };
 
   return (
@@ -49,6 +50,24 @@ function TaskModal({ task, onSave, onClose }) {
               <option value="todo">Tehtävä</option>
               <option value="in_progress">Käynnissä</option>
               <option value="done">Valmis</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Prioriteetti</label>
+            <select
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+              style={{
+                width: '100%',
+                padding: '10px 14px',
+                border: '1px solid #ddd',
+                borderRadius: '8px',
+                fontSize: '14px',
+              }}
+            >
+              <option value="low">Matala</option>
+              <option value="normal">Normaali</option>
+              <option value="high">Korkea</option>
             </select>
           </div>
           <div className="form-group">

@@ -17,6 +17,12 @@ const NEXT_STATUS = {
   done: 'todo',
 };
 
+const PRIORITY_LABELS = {
+  low: 'Matala',
+  normal: 'Normaali',
+  high: 'Korkea',
+};
+
 function TaskBoard() {
   const [tasks, setTasks] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -24,6 +30,9 @@ function TaskBoard() {
   const [view, setView] = useState('board'); // 'board' or 'calendar'
   const [draggedTaskId, setDraggedTaskId] = useState(null);
   const [dragOverColumn, setDragOverColumn] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterPriority, setFilterPriority] = useState('all');
+  const [filterDeadline, setFilterDeadline] = useState('all');
   const { username, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -78,7 +87,31 @@ function TaskBoard() {
     fetchTasks();
   };
 
-  const getTasksByStatus = (status) => tasks.filter((t) => t.status === status);
+  const getTasksByStatus = (status) => {
+    const query = searchQuery.toLowerCase();
+    return tasks.filter((t) => {
+      if (t.status !== status) return false;
+      if (query && !t.title.toLowerCase().includes(query) && !t.description.toLowerCase().includes(query)) return false;
+      if (filterPriority !== 'all' && t.priority !== filterPriority) return false;
+      if (filterDeadline === 'overdue' && !t.is_overdue) return false;
+      if (filterDeadline === 'today') {
+        const today = new Date().toISOString().split('T')[0];
+        if (t.due_date !== today) return false;
+      }
+      if (filterDeadline === 'week') {
+        if (!t.due_date) return false;
+        const now = new Date();
+        const weekLater = new Date(now);
+        weekLater.setDate(now.getDate() + 7);
+        const d = new Date(t.due_date + 'T00:00:00');
+        if (d < now || d > weekLater) return false;
+      }
+      if (filterDeadline === 'no_date' && t.due_date) return false;
+      return true;
+    });
+  };
+
+  const hasActiveFilters = searchQuery || filterPriority !== 'all' || filterDeadline !== 'all';
 
   const handleDragStart = (e, taskId) => {
     setDraggedTaskId(taskId);
@@ -160,6 +193,49 @@ function TaskBoard() {
         {view === 'calendar' ? (
           <Calendar tasks={tasks} />
         ) : (
+        <>
+        <div className="filter-bar">
+          <div className="filter-search">
+            <input
+              type="text"
+              placeholder="Hae tehtäviä..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input"
+            />
+          </div>
+          <div className="filter-selects">
+            <select
+              value={filterPriority}
+              onChange={(e) => setFilterPriority(e.target.value)}
+              className="filter-select"
+            >
+              <option value="all">Kaikki prioriteetit</option>
+              <option value="high">Korkea</option>
+              <option value="normal">Normaali</option>
+              <option value="low">Matala</option>
+            </select>
+            <select
+              value={filterDeadline}
+              onChange={(e) => setFilterDeadline(e.target.value)}
+              className="filter-select"
+            >
+              <option value="all">Kaikki deadlinet</option>
+              <option value="overdue">Myöhässä</option>
+              <option value="today">Tänään</option>
+              <option value="week">Seuraavat 7 päivää</option>
+              <option value="no_date">Ei deadlinea</option>
+            </select>
+            {hasActiveFilters && (
+              <button
+                className="btn-clear-filters"
+                onClick={() => { setSearchQuery(''); setFilterPriority('all'); setFilterDeadline('all'); }}
+              >
+                Tyhjennä
+              </button>
+            )}
+          </div>
+        </div>
         <div className="columns">
           {['todo', 'in_progress', 'done'].map((status) => (
             <div
@@ -182,7 +258,12 @@ function TaskBoard() {
                 >
                   <div className="task-card-header">
                     <h4>{task.title}</h4>
-                    {task.is_overdue && <span className="badge-overdue">Myöhässä</span>}
+                    <div className="task-badges">
+                      <span className={`badge-priority priority-${task.priority}`}>
+                        {PRIORITY_LABELS[task.priority]}
+                      </span>
+                      {task.is_overdue && <span className="badge-overdue">Myöhässä</span>}
+                    </div>
                   </div>
                   {task.description && <p>{task.description}</p>}
                   {task.due_date && (
@@ -206,6 +287,7 @@ function TaskBoard() {
             </div>
           ))}
         </div>
+        </>
         )}
       </div>
 
