@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import TaskModal from './TaskModal';
 import Calendar from './Calendar';
+import { useTheme } from '../context/ThemeContext';
 
 const STATUS_LABELS = {
   todo: 'Tehtävä',
@@ -34,6 +35,7 @@ function TaskBoard() {
   const [filterPriority, setFilterPriority] = useState('all');
   const [filterDeadline, setFilterDeadline] = useState('all');
   const { username, logout } = useAuth();
+  const { dark, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const fetchTasks = useCallback(async () => {
@@ -160,6 +162,9 @@ function TaskBoard() {
         <h1>Tehtävienhallinta</h1>
         <div className="header-right">
           <span>{username}</span>
+          <button className="btn-theme" onClick={toggleTheme} title={dark ? 'Vaalea tila' : 'Tumma tila'}>
+            {dark ? '☀️' : '🌙'}
+          </button>
           <Link to="/settings" className="btn-settings">Asetukset</Link>
           <button className="btn-logout" onClick={handleLogout}>
             Kirjaudu ulos

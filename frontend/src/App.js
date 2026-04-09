@@ -5,6 +5,7 @@ import Register from './components/Register';
 import TaskBoard from './components/TaskBoard';
 import Settings from './components/Settings';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import './App.css';
 
 function PrivateRoute({ children }) {
@@ -14,6 +15,7 @@ function PrivateRoute({ children }) {
 
 function App() {
   return (
+    <ThemeProvider>
     <AuthProvider>
       <Router>
         <div className="app">
@@ -40,6 +42,7 @@ function App() {
         </div>
       </Router>
     </AuthProvider>
+    </ThemeProvider>
   );
 }
 

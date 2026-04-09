@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import api from '../services/api';
 
 function Settings() {
   const { username, logout } = useAuth();
+  const { dark, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   // Password change
@@ -73,6 +75,9 @@ function Settings() {
         <h1>Tehtävienhallinta</h1>
         <div className="header-right">
           <span>{username}</span>
+          <button className="btn-theme" onClick={toggleTheme} title={dark ? 'Vaalea tila' : 'Tumma tila'}>
+            {dark ? '☀️' : '🌙'}
+          </button>
           <Link to="/" className="btn-back">← Takaisin</Link>
         </div>
       </header>

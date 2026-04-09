@@ -802,3 +802,315 @@
   align-items: center;
   gap: 6px;
 }
+
+/* Theme toggle button */
+.btn-theme {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.2s;
+}
+
+.btn-theme:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ============================
+   DARK MODE
+   ============================ */
+
+/* Auth forms */
+[data-theme="dark"] .auth-form {
+  background: #1e1e1e;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .auth-form h2 {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .form-group label {
+  color: #aaa;
+}
+
+[data-theme="dark"] .form-group input {
+  background: #2a2a2a;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .form-group input:focus {
+  border-color: #5a9fe6;
+}
+
+[data-theme="dark"] .auth-link a {
+  color: #5a9fe6;
+}
+
+/* Header */
+[data-theme="dark"] .header {
+  background-color: #0d0d1a;
+}
+
+/* Settings */
+[data-theme="dark"] .settings-page h2 {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .settings-section {
+  background: #1e1e1e;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .settings-section h3 {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .settings-danger {
+  border-color: #5c2020;
+}
+
+[data-theme="dark"] .danger-warning {
+  color: #999;
+}
+
+[data-theme="dark"] .settings-msg.error {
+  background: #3b1515;
+  color: #f5a5a5;
+}
+
+[data-theme="dark"] .settings-msg.success {
+  background: #153b1f;
+  color: #a5f5b5;
+}
+
+[data-theme="dark"] .checkbox-group label {
+  color: #aaa;
+}
+
+/* Task Board */
+[data-theme="dark"] .column {
+  background: #1e1e1e;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .column h3 {
+  border-bottom-color: #333;
+}
+
+[data-theme="dark"] .column-todo h3 {
+  border-bottom-color: #e74c3c;
+}
+
+[data-theme="dark"] .column-progress h3 {
+  border-bottom-color: #f39c12;
+}
+
+[data-theme="dark"] .column-done h3 {
+  border-bottom-color: #27ae60;
+}
+
+/* Task Card */
+[data-theme="dark"] .task-card {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+[data-theme="dark"] .task-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .task-dragging {
+  box-shadow: 0 0 0 2px #5a9fe6;
+}
+
+[data-theme="dark"] .column-drag-over {
+  background: #1a2a3a;
+  border-color: #5a9fe6;
+}
+
+[data-theme="dark"] .task-card p {
+  color: #999;
+}
+
+[data-theme="dark"] .btn-status {
+  background: #3a3a3a;
+  color: #ddd;
+}
+
+[data-theme="dark"] .btn-status:hover {
+  background: #4a4a4a;
+}
+
+[data-theme="dark"] .task-overdue {
+  background: #2a1a1a;
+}
+
+[data-theme="dark"] .priority-high {
+  background: #3b1515;
+  color: #f5a5a5;
+}
+
+[data-theme="dark"] .priority-normal {
+  background: #15253b;
+  color: #a5c5f5;
+}
+
+[data-theme="dark"] .priority-low {
+  background: #2a2a2a;
+  color: #999;
+}
+
+/* Modal */
+[data-theme="dark"] .modal {
+  background: #1e1e1e;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .modal h3 {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .modal textarea {
+  background: #2a2a2a;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .modal textarea:focus {
+  border-color: #5a9fe6;
+}
+
+[data-theme="dark"] .modal select {
+  background: #2a2a2a;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+/* Filter bar */
+[data-theme="dark"] .search-input {
+  background: #2a2a2a;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .search-input:focus {
+  border-color: #5a9fe6;
+  box-shadow: 0 0 0 3px rgba(90, 159, 230, 0.15);
+}
+
+[data-theme="dark"] .filter-select {
+  background: #2a2a2a;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .filter-select:focus {
+  border-color: #5a9fe6;
+}
+
+[data-theme="dark"] .btn-clear-filters {
+  background: #2a2a2a;
+  color: #999;
+}
+
+[data-theme="dark"] .btn-clear-filters:hover {
+  background: #3a3a3a;
+  color: #ddd;
+}
+
+[data-theme="dark"] .task-due-date {
+  color: #999;
+}
+
+/* View toggle */
+[data-theme="dark"] .view-toggle {
+  background: #2a2a2a;
+  border-color: #444;
+}
+
+[data-theme="dark"] .btn-toggle {
+  color: #999;
+}
+
+[data-theme="dark"] .btn-toggle:hover:not(.active) {
+  color: #ddd;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .btn-toggle.active {
+  background: #3a3a3a;
+  color: #e0e0e0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Calendar */
+[data-theme="dark"] .calendar {
+  background: #1e1e1e;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .calendar-nav {
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .calendar-nav:hover {
+  background: #2a2a2a;
+}
+
+[data-theme="dark"] .calendar-day-name {
+  color: #999;
+}
+
+[data-theme="dark"] .calendar-cell {
+  border-color: #2a2a2a;
+}
+
+[data-theme="dark"] .calendar-cell:not(.empty):hover {
+  background: #2a2a2a;
+}
+
+[data-theme="dark"] .calendar-cell.today {
+  background: #1a2a3a;
+  border-color: #5a9fe6;
+}
+
+[data-theme="dark"] .day-number {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .day-tasks-tooltip {
+  background: #1e1e1e;
+  border-color: #444;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .tooltip-task.overdue {
+  background: #3b1515;
+  color: #f5a5a5;
+}
+
+[data-theme="dark"] .tooltip-task.todo,
+[data-theme="dark"] .tooltip-task.in_progress {
+  background: #15253b;
+  color: #a5c5f5;
+}
+
+[data-theme="dark"] .tooltip-task.done {
+  background: #153b1f;
+  color: #a5f5b5;
+}
+
+[data-theme="dark"] .calendar-legend {
+  border-top-color: #333;
+  color: #999;
+}
+
+/* Error message */
+[data-theme="dark"] .error-message {
+  color: #f5a5a5;
+}
