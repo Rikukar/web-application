@@ -16,9 +16,13 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('username');
-      window.location.href = '/login';
+      const url = error.config?.url || '';
+      const isAuthAction = url.includes('/auth/change-password') || url.includes('/auth/delete-account');
+      if (!isAuthAction) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }

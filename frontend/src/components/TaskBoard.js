@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import TaskModal from './TaskModal';
@@ -160,6 +160,7 @@ function TaskBoard() {
         <h1>Tehtävienhallinta</h1>
         <div className="header-right">
           <span>{username}</span>
+          <Link to="/settings" className="btn-settings">Asetukset</Link>
           <button className="btn-logout" onClick={handleLogout}>
             Kirjaudu ulos
           </button>

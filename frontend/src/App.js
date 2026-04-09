@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './components/Login';
 import Register from './components/Register';
 import TaskBoard from './components/TaskBoard';
+import Settings from './components/Settings';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './App.css';
 
@@ -24,6 +25,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <TaskBoard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute>
+                  <Settings />
                 </PrivateRoute>
               }
             />

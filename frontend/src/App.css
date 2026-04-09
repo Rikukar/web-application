@@ -151,6 +151,108 @@
   background: rgba(255, 255, 255, 0.25);
 }
 
+.btn-settings {
+  color: white;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.btn-settings:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.btn-back {
+  color: white;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Settings Page */
+.settings-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.settings-page h2 {
+  margin-bottom: 24px;
+  color: #1a1a2e;
+}
+
+.settings-section {
+  background: white;
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+}
+
+.settings-section h3 {
+  margin-bottom: 16px;
+  font-size: 17px;
+  color: #1a1a2e;
+}
+
+.settings-danger {
+  border: 1px solid #fde8e8;
+}
+
+.settings-danger h3 {
+  color: #e74c3c;
+}
+
+.danger-warning {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.settings-msg {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.settings-msg.error {
+  background: #fde8e8;
+  color: #e74c3c;
+}
+
+.settings-msg.success {
+  background: #e8f8ee;
+  color: #27ae60;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
 /* Task Board */
 .task-board {
   max-width: 1200px;
