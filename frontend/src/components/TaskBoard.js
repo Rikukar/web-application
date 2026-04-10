@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import TaskModal from './TaskModal';
 import Calendar from './Calendar';
+import Sidebar from './Sidebar';
 import { useTheme } from '../context/ThemeContext';
 
 const STATUS_LABELS = {
@@ -172,7 +173,9 @@ function TaskBoard() {
         </div>
       </header>
 
-      <div className="task-board">
+      <div className="main-layout">
+        <Sidebar tasks={tasks} />
+        <div className="task-board">
         <div className="board-header">
           <h2>Tehtävät</h2>
           <div className="board-header-actions">
@@ -295,6 +298,8 @@ function TaskBoard() {
         </div>
         </>
         )}
+      </div>
+
       </div>
 
       {modalOpen && (
