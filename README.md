@@ -1,6 +1,6 @@
 # Tehtävienhallintasovellus
 
-Web-sovellus tehtävien hallintaan. Tehty diplomityötä varten.
+Web-sovellus tehtävien hallintaan.
 
 ## Ominaisuudet
 
@@ -8,8 +8,8 @@ Web-sovellus tehtävien hallintaan. Tehty diplomityötä varten.
 - Tehtävien luonti, muokkaus ja poistaminen
 - Tehtävien tila: Tehtävä → Käynnissä → Valmis
 - Kanban-tyylinen taulunäkymä vedä ja pudota -tuella
-- Kalenterinäkymä (kuukausi, suomenkieliset päivä-/kuukausinimet)
-- Prioriteetit: matala, normaali, korkea (värikoodatut merkit)
+- Kalenterinäkymä
+- Prioriteetit: matala, normaali, korkea
 - Deadline-päivämäärä ja myöhässä-ilmoitukset
 - Haku ja suodatus (teksti, prioriteetti, deadline)
 - Sivupalkki: yhteenveto, edistymispalkki, varoitukset, tulevat deadlinet
