@@ -35,6 +35,7 @@ function TaskBoard() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterPriority, setFilterPriority] = useState('all');
   const [filterDeadline, setFilterDeadline] = useState('all');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { username, logout } = useAuth();
   const { dark, toggleTheme } = useTheme();
   const navigate = useNavigate();
@@ -174,7 +175,16 @@ function TaskBoard() {
       </header>
 
       <div className="main-layout">
-        <Sidebar tasks={tasks} />
+        <button
+          className="sidebar-toggle"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          title={sidebarOpen ? 'Piilota sivupalkki' : 'Näytä sivupalkki'}
+        >
+          {sidebarOpen ? '✕' : '☰'}
+        </button>
+        <div className={`sidebar-wrapper ${sidebarOpen ? 'open' : ''}`}>
+          <Sidebar tasks={tasks} />
+        </div>
         <div className="task-board">
         <div className="board-header">
           <h2>Tehtävät</h2>
