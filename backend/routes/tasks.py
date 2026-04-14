@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from datetime import date
+from datetime import date, timedelta
+from sqlalchemy import func
 from models import db, Task
 
 tasks_bp = Blueprint('tasks', __name__)
@@ -113,3 +114,69 @@ def delete_task(task_id):
     db.session.delete(task)
     db.session.commit()
     return jsonify({'message': 'Tehtävä poistettu'}), 200
+
+
+@tasks_bp.route('/stats', methods=['GET'])
+@jwt_required()
+def get_stats():
+    user_id = int(get_jwt_identity())
+    tasks = Task.query.filter_by(user_id=user_id).all()
+
+    today = date.today()
+
+    # Tila-jakauma
+    status_counts = {'todo': 0, 'in_progress': 0, 'done': 0}
+    priority_counts = {'low': 0, 'normal': 0, 'high': 0}
+    overdue_count = 0
+
+    for t in tasks:
+        status_counts[t.status] = status_counts.get(t.status, 0) + 1
+        priority_counts[t.priority] = priority_counts.get(t.priority, 0) + 1
+        if t.is_overdue:
+            overdue_count += 1
+
+    # Viimeisten 4 viikon valmistuneet (viikottain)
+    weekly_done = []
+    for i in range(3, -1, -1):
+        week_start = today - timedelta(days=today.weekday() + 7 * i)
+        week_end = week_start + timedelta(days=6)
+        count = 0
+        for t in tasks:
+            if t.status == 'done' and t.updated_at:
+                updated_date = t.updated_at.date()
+                if week_start <= updated_date <= week_end:
+                    count += 1
+        week_label = f"{week_start.day}.{week_start.month}.–{week_end.day}.{week_end.month}."
+        weekly_done.append({'week': week_label, 'count': count})
+
+    # Viimeisten 4 viikon luodut
+    weekly_created = []
+    for i in range(3, -1, -1):
+        week_start = today - timedelta(days=today.weekday() + 7 * i)
+        week_end = week_start + timedelta(days=6)
+        count = 0
+        for t in tasks:
+            if t.created_at:
+                created_date = t.created_at.date()
+                if week_start <= created_date <= week_end:
+                    count += 1
+        week_label = f"{week_start.day}.{week_start.month}.–{week_end.day}.{week_end.month}."
+        weekly_created.append({'week': week_label, 'count': count})
+
+    # Deadlinet tällä viikolla
+    week_start = today - timedelta(days=today.weekday())
+    week_end = week_start + timedelta(days=6)
+    deadlines_this_week = []
+    for t in tasks:
+        if t.due_date and t.status != 'done' and week_start <= t.due_date <= week_end:
+            deadlines_this_week.append(t.to_dict())
+
+    return jsonify({
+        'total': len(tasks),
+        'status': status_counts,
+        'priority': priority_counts,
+        'overdue': overdue_count,
+        'weekly_done': weekly_done,
+        'weekly_created': weekly_created,
+        'deadlines_this_week': deadlines_this_week,
+    }), 200

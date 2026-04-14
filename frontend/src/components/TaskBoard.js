@@ -167,6 +167,7 @@ function TaskBoard() {
           <button className="btn-theme" onClick={toggleTheme} title={dark ? 'Vaalea tila' : 'Tumma tila'}>
             {dark ? '☀️' : '🌙'}
           </button>
+          <Link to="/dashboard" className="btn-settings">Dashboard</Link>
           <Link to="/settings" className="btn-settings">Asetukset</Link>
           <button className="btn-logout" onClick={handleLogout}>
             Kirjaudu ulos

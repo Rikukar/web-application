@@ -1090,6 +1090,214 @@
   line-height: 1.6;
 }
 
+/* ============================
+   DASHBOARD
+   ============================ */
+.dashboard {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 24px;
+}
+
+.dashboard-header {
+  margin-bottom: 28px;
+}
+
+.dashboard-header h2 {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.dashboard-subtitle {
+  color: #888;
+  font-size: 14px;
+}
+
+/* Summary cards */
+.dash-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.dash-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+  border-top: 3px solid transparent;
+}
+
+.dash-card-total { border-top-color: #4a90d9; }
+.dash-card-done { border-top-color: #27ae60; }
+.dash-card-progress { border-top-color: #f39c12; }
+.dash-card-overdue { border-top-color: #e74c3c; }
+
+.dash-card-number {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.dash-card-total .dash-card-number { color: #4a90d9; }
+.dash-card-done .dash-card-number { color: #27ae60; }
+.dash-card-progress .dash-card-number { color: #f39c12; }
+.dash-card-overdue .dash-card-number { color: #e74c3c; }
+
+.dash-card-label {
+  display: block;
+  font-size: 13px;
+  color: #888;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Progress bar */
+.dash-section {
+  margin-bottom: 28px;
+}
+
+.dash-progress-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+}
+
+.dash-progress-card h3 {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.dash-progress-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dash-progress-bar {
+  flex: 1;
+  height: 12px;
+  background: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.dash-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+  border-radius: 6px;
+  transition: width 0.5s ease;
+}
+
+.dash-progress-text {
+  font-size: 18px;
+  font-weight: 700;
+  color: #27ae60;
+  min-width: 48px;
+}
+
+/* Chart cards */
+.dash-charts-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.dash-chart-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+}
+
+.dash-chart-card h3 {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+/* Deadlines */
+.dash-deadlines-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+}
+
+.dash-deadlines-card h3 {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.dash-deadline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dash-deadline-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background: #f8f9fa;
+}
+
+.dash-deadline-item.overdue {
+  background: #fff5f5;
+  border-color: #fde8e8;
+}
+
+.dash-deadline-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.dash-deadline-title {
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dash-deadline-date {
+  font-size: 13px;
+  color: #888;
+  white-space: nowrap;
+}
+
+.dash-deadline-date.overdue {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dash-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dash-charts-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .dash-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Theme toggle button */
 .btn-theme {
   background: rgba(255, 255, 255, 0.15);
@@ -1474,4 +1682,43 @@
 
 [data-theme="dark"] .sidebar-wrapper.open {
   box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Dashboard dark mode */
+[data-theme="dark"] .dash-card,
+[data-theme="dark"] .dash-progress-card,
+[data-theme="dark"] .dash-chart-card,
+[data-theme="dark"] .dash-deadlines-card {
+  background: #1e1e1e;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .dash-card-label {
+  color: #aaa;
+}
+
+[data-theme="dark"] .dash-progress-bar {
+  background: #333;
+}
+
+[data-theme="dark"] .dash-deadline-item {
+  background: #2a2a2a;
+  border-color: #333;
+}
+
+[data-theme="dark"] .dash-deadline-item.overdue {
+  background: #3a2020;
+  border-color: #5a2020;
+}
+
+[data-theme="dark"] .dash-deadline-title {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .dash-deadline-date {
+  color: #aaa;
+}
+
+[data-theme="dark"] .dashboard-subtitle {
+  color: #aaa;
 }
