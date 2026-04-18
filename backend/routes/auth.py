@@ -5,6 +5,7 @@ from models import db, User
 
 auth_bp = Blueprint('auth', __name__)
 
+# Rekisteröi uuden käyttäjän – validoi syötteet ja luo JWT-tokenin
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
@@ -30,6 +31,7 @@ def register():
     token = create_access_token(identity=str(user.id))
     return jsonify({'token': token, 'username': user.username}), 201
 
+# Kirjautuminen – tarkistaa tunnukset ja palauttaa JWT-tokenin
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -43,6 +45,7 @@ def login():
     token = create_access_token(identity=str(user.id))
     return jsonify({'token': token, 'username': user.username}), 200
 
+# Palauttaa kirjautuneen käyttäjän tiedot tokenin perusteella
 @auth_bp.route('/me', methods=['GET'])
 @jwt_required()
 def get_current_user():
@@ -52,6 +55,7 @@ def get_current_user():
         return jsonify({'error': 'Käyttäjää ei löydy'}), 404
     return jsonify({'id': user.id, 'username': user.username}), 200
 
+# Salasanan vaihto – vaatii nykyisen salasanan vahvistuksen
 @auth_bp.route('/change-password', methods=['PUT'])
 @jwt_required()
 def change_password():
@@ -74,6 +78,7 @@ def change_password():
     db.session.commit()
     return jsonify({'message': 'Salasana vaihdettu onnistuneesti'}), 200
 
+# Tilin poisto – poistaa käyttäjän ja kaikki tehtävät pysyvästi
 @auth_bp.route('/delete-account', methods=['DELETE'])
 @jwt_required()
 def delete_account():

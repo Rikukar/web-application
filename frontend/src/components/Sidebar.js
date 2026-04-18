@@ -6,6 +6,7 @@ const PRIORITY_LABELS = {
   low: 'Matala',
 };
 
+// Sivupalkki: näyttää yhteenvedon, edistymispalkin, hälytykset ja tulevat deadlinet
 function Sidebar({ tasks }) {
   const total = tasks.length;
   const done = tasks.filter((t) => t.status === 'done').length;

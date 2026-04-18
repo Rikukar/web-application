@@ -7,6 +7,7 @@ from routes.auth import auth_bp
 from routes.tasks import tasks_bp
 
 def create_app():
+    """Luo ja konfiguroi Flask-sovelluksen. Alustaa tietokannan, JWT:n ja reitit."""
     app = Flask(__name__)
     app.config.from_object(Config)
 

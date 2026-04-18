@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import api from '../services/api';
 
+// Asetussivu: salasanan vaihto ja tilin poisto
 function Settings() {
   const { username, logout } = useAuth();
   const { dark, toggleTheme } = useTheme();
@@ -20,6 +21,7 @@ function Settings() {
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [deleteMsg, setDeleteMsg] = useState({ text: '', type: '' });
 
+  // Lähettää salasanan vaihtopyynteön backendiin
   const handlePasswordChange = async (e) => {
     e.preventDefault();
     setPasswordMsg({ text: '', type: '' });
@@ -46,6 +48,7 @@ function Settings() {
     }
   };
 
+  // Poistaa käyttäjätilin ja kirjaa ulos – vaatii salasanan ja vahvistuksen
   const handleDeleteAccount = async (e) => {
     e.preventDefault();
     setDeleteMsg({ text: '', type: '' });

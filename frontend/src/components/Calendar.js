@@ -6,6 +6,7 @@ const MONTHS_FI = [
   'Heinäkuu', 'Elokuu', 'Syyskuu', 'Lokakuu', 'Marraskuu', 'Joulukuu',
 ];
 
+// Kalenterinäkymä: näyttää tehtävät deadlinen mukaan kuukausiruudukossa
 function Calendar({ tasks }) {
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());

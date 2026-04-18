@@ -3,6 +3,7 @@ from datetime import datetime, timezone, date
 
 db = SQLAlchemy()
 
+# Käyttäjämalli – sisältää kirjautumistiedot ja omistaa tehtävät
 class User(db.Model):
     __tablename__ = 'users'
 
@@ -16,6 +17,7 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.username}>'
 
+# Tehtävämalli – yksittäinen tehtävä tila-, prioriteetti- ja deadline-tiedoilla
 class Task(db.Model):
     __tablename__ = 'tasks'
 
@@ -32,11 +34,13 @@ class Task(db.Model):
 
     @property
     def is_overdue(self):
+        """Tarkistaa onko tehtävä myöhässä (deadline mennyt eikä valmis)."""
         if self.due_date and self.status != 'done':
             return self.due_date < date.today()
         return False
 
     def to_dict(self):
+        """Muuntaa tehtävän JSON-yhteensopivaksi sanakirjaksi API-vastauksiin."""
         return {
             'id': self.id,
             'title': self.title,

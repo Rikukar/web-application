@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+// Modaali-ikkuna tehtävän luomiseen ja muokkaukseen
 function TaskModal({ task, onSave, onClose }) {
   const [title, setTitle] = useState(task?.title || '');
   const [description, setDescription] = useState(task?.description || '');

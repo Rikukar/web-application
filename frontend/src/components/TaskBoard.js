@@ -25,6 +25,7 @@ const PRIORITY_LABELS = {
   high: 'Korkea',
 };
 
+// Päänäkymä: kanban-taulu tehtävien hallintaan sisältäen haun, suodatuksen ja drag & dropin
 function TaskBoard() {
   const [tasks, setTasks] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -40,6 +41,7 @@ function TaskBoard() {
   const { dark, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
+  // Hakee käyttäjän tehtävät backendistä
   const fetchTasks = useCallback(async () => {
     try {
       const res = await api.get('/tasks');
@@ -68,6 +70,7 @@ function TaskBoard() {
     setModalOpen(true);
   };
 
+  // Tallentaa uuden tai muokatun tehtävän backendiin
   const handleSave = async (taskData) => {
     if (editingTask) {
       await api.put(`/tasks/${editingTask.id}`, taskData);
@@ -85,12 +88,14 @@ function TaskBoard() {
     }
   };
 
+  // Vaihtaa tehtävän tilaa seuraavaan: tehtävä → käynnissä → valmis
   const handleStatusChange = async (task) => {
     const newStatus = NEXT_STATUS[task.status];
     await api.put(`/tasks/${task.id}`, { status: newStatus });
     fetchTasks();
   };
 
+  // Suodattaa tehtävät sarakekohtaisesti haun, prioriteetin ja deadlinen mukaan
   const getTasksByStatus = (status) => {
     const query = searchQuery.toLowerCase();
     return tasks.filter((t) => {
@@ -132,6 +137,7 @@ function TaskBoard() {
     setDragOverColumn(null);
   };
 
+  // Käsittelee drag & drop -pudotuksen ja päivittää tilan optimistisesti
   const handleDrop = async (e, newStatus) => {
     e.preventDefault();
     setDragOverColumn(null);

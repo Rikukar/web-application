@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext(null);
 
+// Hallitsee tumma/vaalea-teeman ja tallentaa valinnan localStorageen
 export function ThemeProvider({ children }) {
   const [dark, setDark] = useState(() => {
     return localStorage.getItem('theme') === 'dark';

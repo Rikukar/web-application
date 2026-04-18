@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+// Axios-instanssi API-kutsuja varten, perus-URL osoittaa backendin /api-päätepisteeseen
 const api = axios.create({
   baseURL: '/api',
 });
 
+// Lisää JWT-tokenin Authorization-headeriin jokaiseen pyyntöön automaattisesti
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -12,6 +14,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// 401-virheessä kirjaa käyttäjän ulos automaattisesti (paitsi salasana/tilinpoisto-pyyntö)
 api.interceptors.response.use(
   (response) => response,
   (error) => {

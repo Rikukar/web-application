@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext(null);
 
+// Tarjoaa kirjautumistilan (token, username) koko sovellukselle Contextin kautta
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [username, setUsername] = useState(localStorage.getItem('username'));

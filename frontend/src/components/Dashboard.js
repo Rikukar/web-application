@@ -15,12 +15,14 @@ const PRIORITY_LABELS = { low: 'Matala', normal: 'Normaali', high: 'Korkea' };
 const STATUS_COLORS = ['#e74c3c', '#f39c12', '#27ae60'];
 const PRIORITY_COLORS = ['#95a5a6', '#4a90d9', '#e74c3c'];
 
+// Dashboard-sivu: analytiikkakaaviot ja tilastot tehtävistä (Recharts)
 function Dashboard() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const { username } = useAuth();
   const { dark, toggleTheme } = useTheme();
 
+  // Hakee tilastotiedot backendistä Dashboard-kaavioihin
   const fetchStats = useCallback(async () => {
     try {
       const res = await api.get('/tasks/stats');
